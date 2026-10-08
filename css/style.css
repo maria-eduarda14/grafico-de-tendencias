@@ -149,6 +149,19 @@ td { font-size: 14px; }
 .login-card h1 { margin: 0 0 6px; font-size: 24px; }
 .login-card p { margin: 0 0 20px; color: var(--muted); }
 
+.usuario-logado {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #475569;
+  padding: 0 8px;
+}
+
+.usuario-logado strong {
+  color: #1f2937;
+}
+
 .form-group { margin-bottom: 14px; }
 .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
 .form-group input {
