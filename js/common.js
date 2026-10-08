@@ -26,10 +26,10 @@ window.AppUtils = {
       valorEl.textContent = "Não calculável";
       valorEl.classList.add("neutro");
     } else if (percentual > 0) {
-      valorEl.textContent = "↓ " + this.formatarPercentual(percentual) + " de melhora";
+      valorEl.textContent = "↓ " + this.formatarPercentual(percentual);
       valorEl.classList.add("melhora");
     } else if (percentual < 0) {
-      valorEl.textContent = "↑ " + this.formatarPercentual(Math.abs(percentual)) + " de piora";
+      valorEl.textContent = "↑ " + this.formatarPercentual(Math.abs(percentual));
       valorEl.classList.add("piora");
     } else {
       valorEl.textContent = "0,0% — sem alteração";
