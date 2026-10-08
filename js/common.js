@@ -5,7 +5,7 @@ window.AppUtils = {
   },
 
   formatarPercentual(valor) {
-    return valor.toFixed(1).replace(".", ",") + "%";
+    return valor.toFixed(2).replace(".", ",") + "%";
   },
 
   formatarDataBR(dataISO) {
