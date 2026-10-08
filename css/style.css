@@ -149,19 +149,6 @@ td { font-size: 14px; }
 .login-card h1 { margin: 0 0 6px; font-size: 24px; }
 .login-card p { margin: 0 0 20px; color: var(--muted); }
 
-.usuario-logado {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 14px;
-  color: #475569;
-  padding: 0 8px;
-}
-
-.usuario-logado strong {
-  color: #1f2937;
-}
-
 .form-group { margin-bottom: 14px; }
 .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
 .form-group input {
@@ -202,6 +189,16 @@ td { font-size: 14px; }
 
 .empty-state { text-align:center; padding: 34px 16px; color: var(--muted); }
 .loading { opacity:.65; pointer-events:none; }
+
+.usuario-logado {
+  font-size: 14px;
+  color: #64748b;
+  margin-right: 10px;
+}
+
+.usuario-logado strong {
+  color: #1f2937;
+}
 
 @media (max-width: 1150px) {
   .evolucao-resumo { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
