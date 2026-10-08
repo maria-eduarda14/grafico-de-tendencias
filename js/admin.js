@@ -16,7 +16,7 @@ async function protegerPagina() {
   const { data: { session } } = await supabaseClient.auth.getSession();
   if (!session) return location.replace("login.html");
   const usuario = session.user;
-  const nomeUsuario = usuario.user_metadata?.nome || usuario.email;
+  const nomeUsuario = usuario.user_metadata?.display_name || usuario.email;
   document.getElementById("nomeUsuario").textContent = nomeUsuario;
   const { data: isAdmin, error } = await supabaseClient.rpc("is_admin");
   if (error || !isAdmin) {
