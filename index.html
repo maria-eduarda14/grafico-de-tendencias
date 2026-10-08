@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tendência das Notas</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+  <script>Chart.register(ChartDataLabels);</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <section class="card">
+    <img src="img/logo.png" alt="Logo" class="logo-topo" onerror="this.style.display='none'" />
+    <div id="dashboardErro" class="notice"></div>
+    <div id="semDados" class="empty-state" style="display:none">Ainda não há medições cadastradas.</div>
+    <div class="chart-wrap"><canvas id="graficoTendencia"></canvas></div>
+
+    <div class="evolucao-resumo">
+      <div class="evolucao-card geral">
+        <div class="evolucao-titulo">Evolução geral</div>
+        <div id="evolucaoValor" class="evolucao-valor">--</div>
+        <div id="evolucaoDetalhe" class="evolucao-detalhe"></div>
+      </div>
+      <div class="evolucao-card amarela">
+        <div class="evolucao-titulo">Evolução Notas Amarelas</div>
+        <div id="evolucaoAmarelaValor" class="evolucao-valor">--</div>
+        <div id="evolucaoAmarelaDetalhe" class="evolucao-detalhe"></div>
+      </div>
+      <div class="evolucao-card vermelha">
+        <div class="evolucao-titulo">Evolução Notas Vermelhas</div>
+        <div id="evolucaoVermelhaValor" class="evolucao-valor">--</div>
+        <div id="evolucaoVermelhaDetalhe" class="evolucao-detalhe"></div>
+      </div>
+      <div class="evolucao-card nd">
+        <div class="evolucao-titulo">Evolução Notas ND</div>
+        <div id="evolucaoNdValor" class="evolucao-valor">--</div>
+        <div id="evolucaoNdDetalhe" class="evolucao-detalhe"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

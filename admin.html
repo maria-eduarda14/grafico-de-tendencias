@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administração - Tendência das Notas</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+  <script>Chart.register(ChartDataLabels);</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header class="toolbar">
+    <h1>Administração do gráfico</h1>
+    <div class="toolbar-actions">
+      <a class="btn btn-secondary" href="index.html">Ver página pública</a>
+      <button class="btn btn-primary" id="btnAdicionar">+ Adicionar medição</button>
+      <button class="btn btn-secondary" id="btnSair">Sair</button>
+    </div>
+  </header>
+
+  <main class="admin-grid">
+    <div id="adminAviso" class="notice"></div>
+
+    <section class="admin-panel">
+      <h2>Pré-visualização</h2>
+      <div class="chart-wrap"><canvas id="graficoTendencia"></canvas></div>
+      <div class="evolucao-resumo">
+        <div class="evolucao-card geral">
+          <button class="icon-btn edit-card-btn" data-card="geral" title="Editar última medição">✏️</button>
+          <div class="evolucao-titulo">Evolução geral</div>
+          <div id="evolucaoValor" class="evolucao-valor">--</div>
+          <div id="evolucaoDetalhe" class="evolucao-detalhe"></div>
+        </div>
+        <div class="evolucao-card amarela">
+          <button class="icon-btn edit-card-btn" data-card="amarela" title="Editar valor amarelo mais recente">✏️</button>
+          <div class="evolucao-titulo">Evolução Notas Amarelas</div>
+          <div id="evolucaoAmarelaValor" class="evolucao-valor">--</div>
+          <div id="evolucaoAmarelaDetalhe" class="evolucao-detalhe"></div>
+        </div>
+        <div class="evolucao-card vermelha">
+          <button class="icon-btn edit-card-btn" data-card="vermelha" title="Editar valor vermelho mais recente">✏️</button>
+          <div class="evolucao-titulo">Evolução Notas Vermelhas</div>
+          <div id="evolucaoVermelhaValor" class="evolucao-valor">--</div>
+          <div id="evolucaoVermelhaDetalhe" class="evolucao-detalhe"></div>
+        </div>
+        <div class="evolucao-card nd">
+          <button class="icon-btn edit-card-btn" data-card="nd" title="Editar valor ND mais recente">✏️</button>
+          <div class="evolucao-titulo">Evolução Notas ND</div>
+          <div id="evolucaoNdValor" class="evolucao-valor">--</div>
+          <div id="evolucaoNdDetalhe" class="evolucao-detalhe"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <h2 style="margin:0">Todas as medições</h2>
+        <button class="btn btn-primary" id="btnAdicionarTabela">+ Adicionar</button>
+      </div>
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead><tr><th>Data</th><th>Amarelas</th><th>Vermelhas</th><th>ND</th><th>Total</th><th>Ações</th></tr></thead>
+          <tbody id="tabelaRegistros"></tbody>
+        </table>
+      </div>
+      <div id="tabelaVazia" class="empty-state" style="display:none">Nenhuma medição cadastrada.</div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="modalRegistro">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitulo">Nova medição</h2>
+        <button class="icon-btn" id="fecharModal" aria-label="Fechar">✕</button>
+      </div>
+      <form id="registroForm">
+        <input type="hidden" id="registroId" />
+        <div class="form-group"><label for="data">Data</label><input id="data" type="date" required /></div>
+        <div class="form-group"><label for="amarela">Notas Amarelas</label><input id="amarela" type="number" min="0" step="1" required /></div>
+        <div class="form-group"><label for="vermelha">Notas Vermelhas</label><input id="vermelha" type="number" min="0" step="1" required /></div>
+        <div class="form-group"><label for="nd">Notas ND</label><input id="nd" type="number" min="0" step="1" required /></div>
+        <div id="modalAviso" class="notice"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancelarModal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
