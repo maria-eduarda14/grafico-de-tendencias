@@ -101,7 +101,7 @@ button { cursor: pointer; }
   flex-wrap: wrap;
 }
 .toolbar h1 { margin: 0; font-size: 24px; }
-.toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.toolbar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 .btn {
   border: 1px solid transparent;
@@ -191,13 +191,28 @@ td { font-size: 14px; }
 .loading { opacity:.65; pointer-events:none; }
 
 .usuario-logado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+  padding: 0 14px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  background: #ffffff;
+
   font-size: 14px;
   color: #64748b;
-  margin-right: 10px;
+
+  white-space: nowrap;
 }
 
 .usuario-logado strong {
+  margin-left: 4px;
   color: #1f2937;
+  font-weight: 700;
 }
 
 @media (max-width: 1150px) {
