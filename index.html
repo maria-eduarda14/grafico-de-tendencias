@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +11,7 @@
   <script>Chart.register(ChartDataLabels);</script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
   <section class="card">
     <img src="img/logo.png" alt="Logo" class="logo-topo" onerror="this.style.display='none'" />
@@ -19,28 +21,27 @@
 
     <div class="evolucao-resumo">
       <div class="evolucao-card geral">
-        <div class="evolucao-titulo">Redução geral</div>
         <div class="evolucao-titulo">Meta</div>
         <div id="evolucaoValor" class="evolucao-valor">--</div>
-          <div class="evolucao-complemento">para atingir a meta de 85%</div>
+        <div class="evolucao-complemento">para atingir a meta de 85%</div>
         <div id="evolucaoDetalhe" class="evolucao-detalhe"></div>
       </div>
       <div class="evolucao-card amarela">
         <div class="evolucao-titulo">Redução Notas Amarelas</div>
         <div id="evolucaoAmarelaValor" class="evolucao-valor">--</div>
-          <div class="evolucao-complemento" hidden></div>
+        <div class="evolucao-complemento" hidden></div>
         <div id="evolucaoAmarelaDetalhe" class="evolucao-detalhe"></div>
       </div>
       <div class="evolucao-card vermelha">
         <div class="evolucao-titulo">Redução Notas Vermelhas</div>
         <div id="evolucaoVermelhaValor" class="evolucao-valor">--</div>
-          <div class="evolucao-complemento" hidden></div>
+        <div class="evolucao-complemento" hidden></div>
         <div id="evolucaoVermelhaDetalhe" class="evolucao-detalhe"></div>
       </div>
       <div class="evolucao-card nd">
         <div class="evolucao-titulo">Redução Notas ND</div>
         <div id="evolucaoNdValor" class="evolucao-valor">--</div>
-          <div class="evolucao-complemento" hidden></div>
+        <div class="evolucao-complemento" hidden></div>
         <div id="evolucaoNdDetalhe" class="evolucao-detalhe"></div>
       </div>
     </div>
@@ -51,4 +52,5 @@
   <script src="js/common.js"></script>
   <script src="js/dashboard.js"></script>
 </body>
+
 </html>
