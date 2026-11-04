@@ -10,9 +10,10 @@
 <body>
   <main class="login-shell">
     <section class="login-card">
-      <h1>Administração</h1>
-      <p>Entre para editar os dados do gráfico.</p>
-      <div id="loginAviso" class="notice"></div>
+      <h1 id="authTitulo">Administração</h1>
+      <p id="authDescricao">Entre para editar os dados do gráfico.</p>
+      <div id="loginAviso" class="notice" role="status" aria-live="polite"></div>
+
       <form id="loginForm">
         <div class="form-group">
           <label for="email">E-mail</label>
@@ -20,11 +21,57 @@
         </div>
         <div class="form-group">
           <label for="senha">Senha</label>
-          <input id="senha" type="password" autocomplete="current-password" required />
+          <div class="password-field">
+            <input id="senha" type="password" autocomplete="current-password" required />
+            <button class="password-toggle" type="button" data-target="senha" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
         </div>
-        <button class="btn btn-primary" type="submit" style="width:100%">Entrar</button>
+        <button class="btn btn-primary auth-submit" type="submit">Entrar</button>
       </form>
-      <p style="margin-top:16px;font-size:13px"><a href="index.html">← Voltar ao gráfico público</a></p>
+
+      <form id="cadastroForm" hidden>
+        <div class="form-group">
+          <label for="cadastroEmail">E-mail</label>
+          <input id="cadastroEmail" type="email" autocomplete="email" required disabled />
+        </div>
+        <div class="form-group">
+          <label for="cadastroSenha">Senha</label>
+          <div class="password-field">
+            <input id="cadastroSenha" type="password" autocomplete="new-password" minlength="8" required disabled />
+            <button class="password-toggle" type="button" data-target="cadastroSenha" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cadastroConfirmacao">Confirmar senha</label>
+          <div class="password-field">
+            <input id="cadastroConfirmacao" type="password" autocomplete="new-password" minlength="8" required disabled />
+            <button class="password-toggle" type="button" data-target="cadastroConfirmacao" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-primary auth-submit" type="submit">Cadastrar</button>
+        <p class="auth-help">O cadastro não libera o painel automaticamente. É preciso autorização do administrador.</p>
+      </form>
+
+      <form id="recuperacaoForm" hidden>
+        <div class="form-group">
+          <label for="recuperacaoEmail">E-mail cadastrado</label>
+          <input id="recuperacaoEmail" type="email" autocomplete="email" required disabled />
+        </div>
+        <button class="btn btn-primary auth-submit" type="submit">Enviar link de recuperação</button>
+      </form>
+
+      <div class="auth-navigation" id="authNav">
+        <button type="button" class="btn auth-outline" id="acaoCadastrar">Criar conta</button>
+        <button type="button" class="auth-link-button" id="acaoRecuperar">Esqueceu sua senha?</button>
+      </div>
+      <button type="button" class="auth-link-button auth-back" id="voltarLogin" hidden>← Voltar ao login</button>
+      <p class="auth-public-link"><a href="index.html">← Voltar ao gráfico público</a></p>
     </section>
   </main>
   <script src="js/config.js"></script>

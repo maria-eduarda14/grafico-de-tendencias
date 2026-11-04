@@ -236,3 +236,20 @@ td { font-size: 14px; }
 .evolucao-complemento { font-size: 14px; font-weight: 400; color: #475569; line-height: 1.4; margin: -1px 0 7px; overflow-wrap: anywhere; }
 .evolucao-complemento[hidden] { display: none; }
 .notice.info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+/* Login: cadastro, recuperação e visualização de senha */
+.auth-submit { width: 100%; }
+.auth-navigation { display: grid; gap: 10px; margin-top: 14px; }
+.auth-navigation[hidden], .auth-back[hidden], form[hidden] { display: none !important; }
+.auth-outline { background: #fff; border: 1px solid #bfdbfe; color: #1d4ed8; width: 100%; }
+.auth-outline:hover { background: #eff6ff; }
+.auth-link-button { border: 0; background: transparent; padding: 7px 6px; color: #2563eb; font-size: 14px; font-weight: 600; text-align: center; }
+.auth-link-button:hover { text-decoration: underline; }
+.auth-back { display: block; margin: 12px auto 0; }
+.auth-help { font-size: 12px; line-height: 1.5; margin: 12px 0 0 !important; }
+.auth-public-link { margin: 18px 0 0 !important; font-size: 13px; text-align: center; }
+.password-field { position: relative; }
+.password-field input { padding-right: 46px; }
+.password-toggle { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 38px; height: 36px; display: grid; place-items: center; padding: 7px; border: 0; background: transparent; border-radius: 7px; color: #64748b; }
+.password-toggle:hover, .password-toggle:focus-visible { background: #eff6ff; color: #1d4ed8; }
+.password-toggle svg { width: 20px; height: 20px; }
