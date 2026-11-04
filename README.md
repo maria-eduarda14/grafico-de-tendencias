@@ -1,8 +1,8 @@
-# Dashboard de Tendência com Administração
+# Dashboard de Tendências — Meta de conclusão e cards editáveis
 
 Projeto estático (HTML/CSS/JS + Chart.js).
 
-## O que já está implementado
+## O que mudou
 
 - Cards de evolução geral, Amarela, Vermelha e ND.
 - Adicionar uma medição;

@@ -70,6 +70,7 @@ button { cursor: pointer; }
   flex-direction: column;
   justify-content: center;
 }
+.evolucao-card.geral { border-top: 4px solid var(--primary); }
 .evolucao-card.amarela { border-top: 4px solid var(--yellow); }
 .evolucao-card.vermelha { border-top: 4px solid var(--red); }
 .evolucao-card.nd { border-top: 4px solid var(--gray); }
@@ -79,6 +80,9 @@ button { cursor: pointer; }
 .evolucao-valor.melhora { color: var(--green); }
 .evolucao-valor.piora { color: var(--danger); }
 .evolucao-valor.neutro { color: #475569; }
+/* Meta: maior destaque ao percentual calculado, sem alterar os demais cards. */
+.evolucao-card.geral .evolucao-valor { font-size: 30px; font-weight: 800; color: var(--primary); letter-spacing: -0.8px; }
+.evolucao-card.geral .evolucao-complemento { font-weight: 400; }
 .evolucao-detalhe { font-size: 13px; line-height: 1.35; color: var(--muted); }
 
 .icon-btn {
@@ -227,3 +231,8 @@ td { font-size: 14px; }
   .evolucao-resumo { grid-template-columns: 1fr; }
   .logo-topo { width: 220px; }
 }
+
+/* Textos complementares editáveis dos cards */
+.evolucao-complemento { font-size: 14px; font-weight: 400; color: #475569; line-height: 1.4; margin: -1px 0 7px; overflow-wrap: anywhere; }
+.evolucao-complemento[hidden] { display: none; }
+.notice.info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }

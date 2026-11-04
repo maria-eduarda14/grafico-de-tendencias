@@ -4,6 +4,11 @@ async function iniciarDashboard() {
   try {
     const registros = await AppUtils.carregarRegistros();
     renderizarDashboard(registros);
+    try {
+      await AppUtils.carregarConfiguracaoCards();
+    } catch (configError) {
+      console.warn("Não foi possível carregar os textos personalizados dos cards. Execute a migração SQL.", configError);
+    }
   } catch (err) {
     console.error(err);
     const alvo = document.getElementById("dashboardErro");
@@ -31,7 +36,7 @@ function renderizarDashboard(registros) {
   const nd = registros.map(r => Number(r.nd));
   const totais = registros.map(r => Number(r.amarela) + Number(r.vermelha) + Number(r.nd));
 
-  AppUtils.preencherCard("evolucaoValor", "evolucaoDetalhe", totais[0], totais.at(-1));
+  AppUtils.preencherCardMeta(registros);
   AppUtils.preencherCard("evolucaoAmarelaValor", "evolucaoAmarelaDetalhe", amarelas[0], amarelas.at(-1));
   AppUtils.preencherCard("evolucaoVermelhaValor", "evolucaoVermelhaDetalhe", vermelhas[0], vermelhas.at(-1));
   AppUtils.preencherCard("evolucaoNdValor", "evolucaoNdDetalhe", nd[0], nd.at(-1));

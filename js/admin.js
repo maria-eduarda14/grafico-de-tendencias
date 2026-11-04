@@ -36,6 +36,13 @@ async function protegerPagina() {
     return location.replace("login.html");
   }
   await recarregar();
+  try {
+    await AppUtils.carregarConfiguracaoCards();
+    configuracoesCards = await buscarConfiguracoesCards();
+  } catch (erro) {
+    console.warn(erro);
+    mostrarAviso("Não foi possível carregar a configuração dos cards. Execute a migração SQL do projeto.", "error");
+  }
 }
 
 async function recarregar() {
@@ -91,7 +98,7 @@ function renderPreview() {
   const nd = registros.map(r => Number(r.nd));
   const totais = registros.map(r => Number(r.amarela)+Number(r.vermelha)+Number(r.nd));
 
-  AppUtils.preencherCard("evolucaoValor","evolucaoDetalhe",totais[0],totais.at(-1));
+  AppUtils.preencherCardMeta(registros);
   AppUtils.preencherCard("evolucaoAmarelaValor","evolucaoAmarelaDetalhe",amarelas[0],amarelas.at(-1));
   AppUtils.preencherCard("evolucaoVermelhaValor","evolucaoVermelhaDetalhe",vermelhas[0],vermelhas.at(-1));
   AppUtils.preencherCard("evolucaoNdValor","evolucaoNdDetalhe",nd[0],nd.at(-1));
@@ -183,11 +190,71 @@ document.getElementById("cancelarModal").addEventListener("click", fecharModal);
 modal.addEventListener("click", e => { if (e.target === modal) fecharModal(); });
 document.getElementById("btnSair").addEventListener("click", async () => { await supabaseClient.auth.signOut(); location.href="login.html"; });
 
-document.querySelectorAll(".edit-card-btn").forEach(btn => btn.addEventListener("click", () => {
-  if (!registros.length) return abrirNovo();
-  const ultimo = registros.at(-1);
-  const campo = btn.dataset.card === "geral" ? "data" : btn.dataset.card;
-  abrirEdicao(ultimo.id, campo);
-}));
+// Edição do conteúdo textual dos cards, separada do modal de medições.
+let configuracoesCards = {};
+const modalCard = document.getElementById("modalCard");
+const cardForm = document.getElementById("cardForm");
+const cardAviso = document.getElementById("cardAviso");
+
+async function buscarConfiguracoesCards() {
+  const { data, error } = await supabaseClient
+    .from("dashboard_card_config")
+    .select("card_key,titulo,complemento");
+  if (error) throw error;
+  const resultado = {};
+  for (const item of data || []) {
+    if (AppUtils.configuracaoPadraoCards[item.card_key]) {
+      resultado[item.card_key] = { titulo: item.titulo, complemento: item.complemento };
+    }
+  }
+  return resultado;
+}
+
+function abrirEdicaoCard(chave) {
+  const padrao = AppUtils.configuracaoPadraoCards[chave];
+  if (!padrao) return;
+  const valores = configuracoesCards[chave] || padrao;
+  document.getElementById("modalCardTitulo").textContent = `Editar card: ${valores.titulo}`;
+  document.getElementById("cardChave").value = chave;
+  document.getElementById("cardTituloTexto").value = valores.titulo;
+  document.getElementById("cardComplementoTexto").value = valores.complemento || "";
+  cardAviso.className = "notice";
+  modalCard.classList.add("open");
+  document.getElementById("cardTituloTexto").focus();
+}
+
+function fecharEdicaoCard() { modalCard.classList.remove("open"); }
+
+document.querySelectorAll(".edit-card-btn").forEach(btn => {
+  btn.addEventListener("click", () => abrirEdicaoCard(btn.dataset.card));
+});
+document.getElementById("fecharModalCard").addEventListener("click", fecharEdicaoCard);
+document.getElementById("cancelarModalCard").addEventListener("click", fecharEdicaoCard);
+modalCard.addEventListener("click", e => { if (e.target === modalCard) fecharEdicaoCard(); });
+
+cardForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  const chave = document.getElementById("cardChave").value;
+  const titulo = document.getElementById("cardTituloTexto").value.trim();
+  const complemento = document.getElementById("cardComplementoTexto").value.trim();
+  if (!AppUtils.configuracaoPadraoCards[chave] || !titulo) return;
+  const salvar = document.getElementById("salvarCard");
+  salvar.disabled = true;
+  try {
+    const { error } = await supabaseClient.from("dashboard_card_config").upsert(
+      { card_key: chave, titulo, complemento }, { onConflict: "card_key" }
+    );
+    if (error) throw error;
+    configuracoesCards[chave] = { titulo, complemento };
+    AppUtils.configurarCards(configuracoesCards);
+    fecharEdicaoCard();
+    mostrarAviso("Texto do card atualizado. Os cálculos continuam automáticos.");
+  } catch (erro) {
+    cardAviso.textContent = "Não foi possível salvar: " + erro.message + ". Confira a migração SQL e as permissões do Supabase.";
+    cardAviso.className = "notice show error";
+  } finally {
+    salvar.disabled = false;
+  }
+});
 
 protegerPagina();
