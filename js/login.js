@@ -1,7 +1,6 @@
 const aviso = document.getElementById("loginAviso");
 const telas = {
   login: { form: document.getElementById("loginForm"), titulo: "Administração", descricao: "Entre para editar os dados do gráfico." },
-  cadastro: { form: document.getElementById("cadastroForm"), titulo: "Criar conta", descricao: "Cadastre seu e-mail e uma senha para solicitar acesso." },
   recuperacao: { form: document.getElementById("recuperacaoForm"), titulo: "Esqueceu sua senha?", descricao: "Informe seu e-mail para receber o link de recuperação." }
 };
 
@@ -52,7 +51,6 @@ document.querySelectorAll(".password-toggle").forEach((botao) => {
   });
 });
 
-document.getElementById("acaoCadastrar").addEventListener("click", () => alternarTela("cadastro"));
 document.getElementById("acaoRecuperar").addEventListener("click", () => alternarTela("recuperacao"));
 document.getElementById("voltarLogin").addEventListener("click", () => alternarTela("login"));
 
@@ -80,27 +78,6 @@ telas.login.form.addEventListener("submit", async (e) => {
       return mostrarAviso("Sua conta ainda não está autorizada a acessar a administração.");
     }
     location.replace("admin.html");
-  });
-});
-
-telas.cadastro.form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  await duranteEnvio(telas.cadastro.form, async () => {
-    const email = document.getElementById("cadastroEmail").value.trim();
-    const password = document.getElementById("cadastroSenha").value;
-    const confirmacao = document.getElementById("cadastroConfirmacao").value;
-    if (password !== confirmacao) return mostrarAviso("As senhas não são iguais.");
-    if (password.length < 8) return mostrarAviso("Use uma senha de pelo menos 8 caracteres.");
-    const redirect = new URL("login.html", location.href).href;
-    const { data, error } = await supabaseClient.auth.signUp({
-      email, password, options: { emailRedirectTo: redirect }
-    });
-    if (error) return mostrarAviso("Não foi possível criar a conta: " + error.message);
-    // Sem confirmação de e-mail, o Supabase pode iniciar a sessão imediatamente.
-    // A sessão é encerrada; somente quem está em admin_users pode acessar o painel.
-    if (data?.session) await supabaseClient.auth.signOut();
-    mostrarAviso("Cadastro solicitado! Se receber um e-mail de confirmação, abra o link. Depois, peça ao administrador para autorizar seu acesso.", "success");
-    telas.cadastro.form.reset();
   });
 });
 
